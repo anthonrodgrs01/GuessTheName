@@ -91,8 +91,9 @@ class GameFragment : Fragment() {
      * Called when the game is finished
      */
     fun gameFinished() {
-        val action = GameFragmentDirections.actionGameToScore()
+
         val currentScore = viewModel.score.value ?: 0
+        val action = GameFragmentDirections.actionGameToScore(currentScore)
         findNavController(this).navigate(action)
     }
 

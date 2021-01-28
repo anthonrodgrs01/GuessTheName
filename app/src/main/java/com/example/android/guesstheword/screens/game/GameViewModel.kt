@@ -78,4 +78,8 @@ class GameViewModel : ViewModel() {
         super.onCleared()
         Log.i("GameViewModel", "GameViewModel Destroyed")
     }
+
+    fun gameFinishedNotified(){
+        _gameFinished.value = false
+    }
 }

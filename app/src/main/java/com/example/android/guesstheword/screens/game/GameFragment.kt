@@ -17,12 +17,15 @@
 package com.example.android.guesstheword.screens.game
 
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment.findNavController
@@ -73,6 +76,10 @@ class GameFragment : Fragment() {
         viewModel.word.observe(viewLifecycleOwner, Observer {
             newWord -> binding.wordText.text = newWord
         })
+
+        viewModel.currentTime.observe(viewLifecycleOwner, Observer { newTime ->
+            binding.timerText.text = DateUtils.formatElapsedTime(newTime)
+        })
         viewModel.gameFinished.observe(viewLifecycleOwner, Observer { hasGameFinished ->
             if (hasGameFinished){
                 gameFinished()
@@ -80,6 +87,10 @@ class GameFragment : Fragment() {
             } })
         return binding.root
 
+    }
+
+    override fun getViewLifecycleOwnerLiveData(): LiveData<LifecycleOwner> {
+        return super.getViewLifecycleOwnerLiveData()
     }
 
     /**
